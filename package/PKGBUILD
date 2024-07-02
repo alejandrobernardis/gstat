@@ -1,0 +1,35 @@
+pkgname=gstat
+pkgver=@PACKAGE_VERSION@
+pkgrel=@PACKAGE_RELEASE@
+pkgdesc="Show summary changes for multiple git repositories"
+url="https://github.com/alejandrobernardis/${pkgname}"
+arch=(x86_64)
+license=(MIT)
+depends=("bash>=4.0.0" "zsh>=5.0.0" "git>=2.0.0" )
+source=("git+${url}")
+sha256sums=('SKIP')
+
+_pkgref="${pkgname}-${pkgver}"
+
+prepare() {
+  sed -e "s|@VERSION@|${pkgver}|g" -i "${srcdir}/${_pkgref}/usr/lib/${pkgname}/${pkgname}.zsh"
+  zsh -c "zcompile ${srcdir}/${_pkgref}/usr/lib/${pkgname}/${pkgname}.zsh"
+}
+
+package() {
+  install -m 0755 -d "${pkgdir}/etc/${pkgname}"
+  install -m 0644 -p "${srcdir}/${_pkgref}/etc/${pkgname}/${pkgname}.conf" "${pkgdir}/etc/${pkgname}/${pkgname}.conf"
+  install -m 0755 -d "${pkgdir}/usr/bin"
+  install -m 0755 -p "${srcdir}/${_pkgref}/usr/bin/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+  install -m 0755 -d "${pkgdir}/usr/lib/${pkgname}"
+  install -m 0644 -p "${srcdir}/${_pkgref}/usr/lib/${pkgname}/${pkgname}.zsh" "${pkgdir}/usr/lib/${pkgname}/${pkgname}.zsh"
+  install -m 0644 -p "${srcdir}/${_pkgref}/usr/lib/${pkgname}/${pkgname}.zsh.zwc" "${pkgdir}/usr/lib/${pkgname}/${pkgname}.zsh.zwc"
+  install -m 0755 -d "${pkgdir}/usr/share/doc/${pkgname}"
+  install -m 0644 -p "${srcdir}/${_pkgref}/VERSION" "${pkgdir}/usr/share/doc/${pkgname}/VERSION"
+  install -m 0644 -p "${srcdir}/${_pkgref}/RELEASE" "${pkgdir}/usr/share/doc/${pkgname}/RELEASE"
+  install -m 0644 -p "${srcdir}/${_pkgref}/usr/share/doc/${pkgname}/${pkgname}.1.md" "${pkgdir}/usr/share/doc/${pkgname}/${pkgname}.1.md"
+  install -m 0755 -d "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -m 0644 -p "${srcdir}/${_pkgref}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -m 0755 -d "${pkgdir}/usr/share/man/man1"
+  install -m 0644 -p "${srcdir}/${_pkgref}/usr/share/man/man1/${pkgname}.1.gz" "${pkgdir}/usr/share/man/man1/${pkgname}.1.gz"
+}
