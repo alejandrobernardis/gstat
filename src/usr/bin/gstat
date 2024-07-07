@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Author: Alejandro M. BERNARDIS
+# Email: alejandro.bernardis at gmail.com
+
+function __main() {
+
+  local _workdir _library _gstat
+
+  _workdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+  _library="$(realpath "${_workdir}/../lib/gstat")"
+
+  if [[ -d "${_library}" ]]; then
+    _gstat="${_library}/gstat.zsh"
+    if [[ -s "${_gstat}" ]]; then
+      command -p zsh "${_gstat}" "$@"
+    fi
+  fi
+
+}
+
+if typeset -f "__main" &>/dev/null; then
+  __main "$@"
+fi

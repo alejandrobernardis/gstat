@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Author: Alejandro M. BERNARDIS
+# Email: alejandro.bernardis at gmail.com
+
+if ! typeset -f '__custom_profile' &>/dev/null; then
+
+  function __custom_profile() {
+
+    local idx pts='' dots='.' comma=','
+
+    for idx in {1..7}; do
+      dots+='.'; comma+=','; pts+='../';
+      alias "${dots}"="cd -- ${pts}"
+      alias "${comma}"="cd -- ${pts}; pwd; ls"
+    done
+
+    local -a ls_opts
+
+    ls_opts+=('-lv')
+    ls_opts+=('--classify')
+    ls_opts+=('--group-directories-first')
+    ls_opts+=('--human-readable')
+    ls_opts+=('--color=always')
+    ls_opts+=('--time-style="+%Y-%m-%d %T"')
+
+    alias l="ls"
+    alias ll='ls'
+
+    alias ls="ls ${ls_opts[*]}"
+    alias la="ls -A"
+    alias lr="ls -tR"
+    alias lt="ls -t"
+    alias l.="ls -d .*"
+    alias ldot='ls -d .*'
+
+    if command -v nvim &>/dev/null; then
+      alias vim="$(command -v -p nvim)"
+    fi
+
+  }
+
+  PS1=' \[\e[38;5;184;4m\]\u\[\e[0m\] \[\e[38;5;244m\]($?)\[\e[0m\] \[\e[38;5;214;1m\]in\[\e[0m\] \[\e[38;5;223m\]\w\[\e[38;5;214;1m\]:\[\e[0m\] '
+
+else
+  echo 1>&2 "Function '__custom_profile' already exists"
+
+fi
+
+__custom_profile && unset -f __custom_profile
