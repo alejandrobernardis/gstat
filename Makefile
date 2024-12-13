@@ -174,22 +174,27 @@ image:  ## Creates the container image.
 ##, nocache=Ignore container build cache (false, opts: true)
 ##, proxy=Proxy endpoint <protocol://host-or-ip:port> (empty)
 ##, noproxy=Proxy exceptions <host-or-ip> (localhost,127.0.0.1,...)
-image.run: image run
+image.create: image create
 # -----------------------------------------------------------------------------
 .PHONY: image
 ##-----------------------------------------------------------------------------
-run: kill  ## Starts the container.
+create: destroy  ## Creates the container.
 	$(_cmd_run) $(_arg_vol) $(IMAGE) $(args)
 ##, persist=Remove container after exit (false, opts: true)
 ##, dns=DNS server <host-or-ip> (empty)
-run.ssh: kill
+create.ssh: destroy
 	$(_cmd_run) $(_arg_vol) $(_arg_vol_ssh) $(IMAGE) $(args)
-shell:  ## Access to the running container.
-	$(_cmd_oci) exec --tty --interactive $(CONTAINER) bash
-kill:  ## Destroys the container running.
+destroy:
+	-$(_cmd_oci) remove --force $(CONTAINER) &>/dev/null && sleep 1
+shell:  ## Access to container.
+	$(_cmd_oci) exec --tty --interactive $(CONTAINER) tmux
+kill:
 	-$(_cmd_oci) kill $(CONTAINER) &>/dev/null && sleep 1
+start:
+	-$(_cmd_oci) start $(CONTAINER) &>/dev/null
+restart: kill start
 # -----------------------------------------------------------------------------
-.PHONY: run shell kill
+.PHONY: create destroy shell kill start restart
 ##-----------------------------------------------------------------------------
 
 
