@@ -32,4 +32,6 @@ package() {
   install -m 0644 -p "${srcdir}/${_pkgref}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
   install -m 0755 -d "${pkgdir}/usr/share/man/man1"
   install -m 0644 -p "${srcdir}/${_pkgref}/usr/share/man/man1/${pkgname}.1.gz" "${pkgdir}/usr/share/man/man1/${pkgname}.1.gz"
+  install -m 0755 -d "${pkgdir}/usr/share/zsh/site-functions"
+  install -m 0644 -p "${srcdir}/${_pkgref}/usr/share/zsh/site-functions/_%{pkgname}" "${pkgdir}/usr/share/zsh/site-functions/_${pkgname}"
 }
