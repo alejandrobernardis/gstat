@@ -212,6 +212,7 @@ install: uninstall man  ## Install components (alias: `i`).
 	install -v -m 755 -d $(prefix)/lib/$(PACKAGE_NAME)
 	install -v -m 755 -d $(prefix)/share/doc/$(PACKAGE_NAME)
 	install -v -m 755 -d $(prefix)/share/man/man1
+	install -v -m 755 -d $(prefix)/share/zsh/site-functions
 	install -v -m 644 \
 		$(PACKAGE_SRC)/etc/$(PACKAGE_NAME)/$(PACKAGE_NAME).conf \
 		$(prefix)/etc/$(PACKAGE_NAME)/
@@ -230,9 +231,10 @@ install: uninstall man  ## Install components (alias: `i`).
 	install -v -m 644 \
 		$(PACKAGE_SRC)/usr/share/doc/$(PACKAGE_NAME)/$(PACKAGE_NAME).1.md \
 		$(prefix)/share/doc/$(PACKAGE_NAME)/
+	# -
 	install -v -m 644 \
-		$(PACKAGE_SRC)/usr/share/man/man1/$(PACKAGE_NAME).1.gz \
-		$(prefix)/share/man/man1/
+		$(PACKAGE_SRC)/usr/share/zsh/site-functions/_$(PACKAGE_NAME) \
+		$(prefix)/share/zsh/site-functions/
 ##, prefix=Installation path (${HOME}/.local)
 u: uninstall
 uninstall:  ## Uninstall components (alias: `u`).
@@ -240,7 +242,8 @@ uninstall:  ## Uninstall components (alias: `u`).
 		      $(prefix)/lib/$(PACKAGE_NAME) \
 		      $(prefix)/share/doc/$(PACKAGE_NAME)
 	rm -vf  $(prefix)/bin/$(PACKAGE_NAME) \
-		      $(prefix)/share/man/man1/$(PACKAGE_NAME).1.gz
+		      $(prefix)/share/man/man1/$(PACKAGE_NAME).1.gz \
+		      $(prefix)/share/zsh/site-functions/_$(PACKAGE_NAME) \
 ##, prefix=Installation path (${HOME}/.local)
 # -----------------------------------------------------------------------------
 .PHONY: i install u uninstall

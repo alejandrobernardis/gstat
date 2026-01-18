@@ -1,0 +1,38 @@
+#compdef gstat
+
+# Author: Alejandro M. BERNARDIS
+# Email: alejandro.bernardis at gmail.com
+
+_gstat() {
+    _arguments -s -S \
+        '(-h --help)'{-h,--help}'[Print a help message and exit]' \
+        '(-V --version)'{-V,--version}'[Display version information and exit]' \
+        '(-x --debug)'{-x,--debug}'[Run in debug mode]' \
+        '(-c --check)'{-c,--check}'[Run in check mode]' \
+        '(-D --no-depth)'{-D,--no-depth}'[Do not drill down into directory levels]' \
+        '(-X --no-cache)'{-X,--no-cache}'[Do not use existing cached]' \
+        '(-E --no-environ)'{-E,--no-environ}'[Do not use existing environment variables]' \
+        '(-f --fetch)'{-f,--fetch}'[Updates the repository before displaying the status]' \
+        '(-v --verbose)'{-v,--verbose}'[Show all repositories]' \
+        '(-w --warnings)'{-w,--warnings}'[Show the repositories with alerts]' \
+        '(-P --no-pull)'{-P,--no-pull}'[Ignore pulls]' \
+        '(-H --no-push)'{-H,--no-push}'[Ignore pushes]' \
+        '(-U --no-upstream)'{-U,--no-upstream}'[Ignore upstreams]' \
+        '(-M --no-uncommitted)'{-M,--no-uncommitted}'[Ignore uncommitted changes]' \
+        '(-G --no-staged)'{-G,--no-staged}'[Ignore staged changes]' \
+        '(-S --no-stashes)'{-S,--no-stashes}'[Ignore stashes changes]' \
+        '(-C --no-conflicts)'{-C,--no-conflicts}'[Ignore conflicts]' \
+        '(-T --no-untracked)'{-T,--no-untracked}'[Ignore untracked files]' \
+        '(-d --depth)'{-d,--depth}'[Descend to N directory levels below the starting points]:depth:(( \
+             1\:"Root" \
+             2\:"Superficial" \
+             4\:"Curious" \
+             8\:"Very curious" \
+             16\:"Deep" \
+             32\:"Very deep" \
+             64\:"Darkness" \
+        ))' \
+        '*:paths:_directories -/'
+}
+
+_gstat "$@"

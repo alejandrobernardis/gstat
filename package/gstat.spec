@@ -50,6 +50,7 @@ Alternative paths to the configuration file:
 
 --
 
+%global debug_package %{nil}
 %prep
 %setup -q
 
@@ -70,6 +71,8 @@ install -p -m 0644 RELEASE %{buildroot}/usr/share/doc/%{name}/RELEASE
 install -p -m 0644 usr/share/doc/%{name}/%{name}.1.md %{buildroot}/usr/share/doc/%{name}/%{name}.1.md
 install -d -m 0755 %{buildroot}/usr/share/man/man1
 install -p -m 0644 usr/share/man/man1/%{name}.1.gz %{buildroot}/usr/share/man/man1/%{name}.1.gz
+install -d -m 0755 %{buildroot}/usr/share/zsh/site-functions
+install -p -m 0644 usr/share/zsh/site-functions/_%{name} %{buildroot}/usr/share/zsh/site-functions/_%{name}
 
 %files
 %defattr(-,root,root)
@@ -81,6 +84,7 @@ install -p -m 0644 usr/share/man/man1/%{name}.1.gz %{buildroot}/usr/share/man/ma
 /usr/share/doc/%{name}/RELEASE
 /usr/share/doc/%{name}/%{name}.1.md
 /usr/share/man/man1/%{name}.1.gz
+/usr/share/zsh/site-functions/_%{name}
 %license LICENSE
 
 %changelog
